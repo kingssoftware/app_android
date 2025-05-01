@@ -1,49 +1,137 @@
-// import AuthContextData from '../../context';
+import axios from 'axios';
+import AuthContextData from '../../context';
 import Input from '../../component/Input';
-// import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-// import { _access } from '../../services/login_services';
+// import {API_URL} from '@env';
+import {_access} from '../../services/login_services';
 import {styles} from '../../style/boody';
-import {iLogin} from '../../types/iLogin';
-import {useState} from 'react';
-// import { useNavigation } from '@react-navigation/native';
-import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {iLogin, iLoginAcess} from '../../types/iLogin';
+import {useState, useContext, useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {
+  View,
+  Image,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  Alert,
+} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-//import { _authuser, _checked, _unchecked } from '../../services/auth_login_services';
+import {
+  _authuser,
+  _checked,
+  _unchecked,
+} from '../../services/auth_login_services';
+import {iAuthLogin} from '../../types/iAuthLogin';
+
+const ax = axios.create({baseURL: 'API_URL'});
 
 const Login = () => {
-  // const nav: any = useNavigation();
-  // const { check } = useContext(AuthContextData);
+  const nav: any = useNavigation();
+  const {check} = useContext(AuthContextData);
 
+  const [loading, setLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [saveCredentials, setSaveCredentials] = useState<boolean>(false); // Estado para o checkbox
+
   const [bruker, setBruker] = useState<iLogin>({
     bruker: '',
     passord: '',
   });
 
-  // useEffect(() => {
-  //   const loading = async () => {
-  //     const auth:iAuthLogin = await  _authuser();
-  //     if (auth){
-  //       setBruker((prev) => ({...prev, bruker: auth.email, passord: auth.senha}))
-  //       setSaveCredentials(true);
-  //     }
-  //   }
-  //   loading();
-  // }, [])
+  useEffect(() => {
+    const loading = async () => {
+      const auth: iAuthLogin = await _authuser();
+
+      console.log(auth);
+
+      if (auth) {
+        setBruker(prev => ({...prev, bruker: auth.email, passord: auth.senha}));
+        setSaveCredentials(true);
+      }
+    };
+    loading();
+  }, []);
 
   // Monitora alterações em bruker e passord para desmarcar o checkbox
-  // useEffect(() => {
-  //   if (saveCredentials) {
-  //     setSaveCredentials(false);
-  //     _unchecked(); // Desmarca as credenciais salvas no serviço
-  //   }
-  // }, [bruker.bruker, bruker.passord]);
+  useEffect(() => {
+    if (saveCredentials) {
+      setSaveCredentials(false);
+      _unchecked(); // Desmarca as credenciais salvas no serviço
+    }
+  }, [bruker.bruker, bruker.passord]);
 
-  const _login = async () => {};
+  const SaveLogin = async () => {
+    if (bruker.bruker == '') {
+      Alert.alert('Alerta!', `Fyll ut e-posten, vær så snill!`, [
+        {text: 'Ok', style: 'cancel'},
+      ]);
+      return;
+    }
+
+    if (bruker.passord == '') {
+      Alert.alert('Alerta!', `Fyll ut passordet, vær så snill!`, [
+        {text: 'Ok', style: 'cancel'},
+      ]);
+      return;
+    }
+
+    const auth_login: any = {email: bruker.bruker, senha: bruker.passord};
+    await _checked(auth_login);
+
+    setSaveCredentials(true);
+  };
+
+  const UncheckedSaveLogin = async () => {
+    await _unchecked();
+    setSaveCredentials(false);
+  };
+
+  const _login = async () => {
+    setLoading(true);
+    try {
+      const response = await ax.post(
+        'Account/Adgang',
+        {bruker: bruker.bruker, passord: bruker.passord},
+        {headers: {'Content-Type': 'application/json'}},
+      );
+      const access: any = response.data;
+      if (access.token) {
+        const obj: iLoginAcess = {
+          objID: null,
+          idTillatelse: access.idTillatelse,
+          token: access.token,
+          forOgEtternavn: access.forOgEtternavn,
+          bruker: access.bruker,
+          brukertype: access.brukertype,
+          expire: access.expiration,
+        };
+        await _access(obj);
+        await check();
+      } else {
+        Alert.alert('Alerta!', `${access.msg}\n${access.subMSG}`, [
+          {text: 'Ok', style: 'cancel'},
+        ]);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" color="#0000ff" animating={true} />
+      </View>
+    );
+  }
 
   return (
     <View
@@ -89,10 +177,13 @@ const Login = () => {
           />
           <TouchableOpacity
             onPress={() => setShowPassword(!showPassword)}
-            style={{
-              padding: wp('2%'),
-              justifyContent: 'center',
-            }}></TouchableOpacity>
+            style={{padding: wp('2%'), justifyContent: 'center'}}>
+            <Icon
+              name={showPassword ? 'eye-off' : 'eye'}
+              size={wp('6%')}
+              color="#13801e"
+            />
+          </TouchableOpacity>
         </View>
 
         <View
@@ -103,6 +194,9 @@ const Login = () => {
             marginLeft: wp('5%'),
           }}>
           <TouchableOpacity
+            onPress={() =>
+              !saveCredentials ? SaveLogin() : UncheckedSaveLogin()
+            }
             style={{
               width: wp('6%'),
               height: wp('6%'),
@@ -111,7 +205,12 @@ const Login = () => {
               borderRadius: 4,
               justifyContent: 'center',
               alignItems: 'center',
-            }}></TouchableOpacity>
+              backgroundColor: saveCredentials ? '#13801e' : 'transparent',
+            }}>
+            {saveCredentials && (
+              <Icon name="checkmark" size={wp('4%')} color="whitesmoke" />
+            )}
+          </TouchableOpacity>
           <Text
             style={{
               color: '#605e5d',
@@ -141,8 +240,7 @@ const Login = () => {
                 Opprett en ny konto?{' '}
               </Text>
               <TouchableOpacity
-              // onPress={() => nav.navigate('Register', {screen: 'register'})}
-              >
+                onPress={() => nav.navigate('Register', {screen: 'register'})}>
                 <Text style={{color: '#13801e', fontSize: wp('5%')}}>
                   {' Registrer deg'}
                 </Text>
