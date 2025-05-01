@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>app_ateko.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>arm64</string>
+			</array>
+			<key>buildNumber</key>
+			<string>1</string>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>9BF3C5A3BC68DE8A2443E622EEC5DDD533D129CC</string>
+				<key>dateExpires</key>
+				<string>26/04/26</string>
+				<key>type</key>
+				<string>Apple Distribution</string>
+			</dict>
+			<key>embeddedBinaries</key>
+			<array>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>arm64</string>
+					</array>
+					<key>buildNumber</key>
+					<string>23.11.4</string>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>9BF3C5A3BC68DE8A2443E622EEC5DDD533D129CC</string>
+						<key>dateExpires</key>
+						<string>26/04/26</string>
+						<key>type</key>
+						<string>Apple Distribution</string>
+					</dict>
+					<key>name</key>
+					<string>MapboxCommon.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>8G86CTD8XL</string>
+						<key>name</key>
+						<string>Valmir Lima</string>
+					</dict>
+					<key>versionNumber</key>
+					<string>23.11.4</string>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>arm64</string>
+					</array>
+					<key>buildNumber</key>
+					<string>0.0.1</string>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>9BF3C5A3BC68DE8A2443E622EEC5DDD533D129CC</string>
+						<key>dateExpires</key>
+						<string>26/04/26</string>
+						<key>type</key>
+						<string>Apple Distribution</string>
+					</dict>
+					<key>name</key>
+					<string>MapboxCoreMaps.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>8G86CTD8XL</string>
+						<key>name</key>
+						<string>Valmir Lima</string>
+					</dict>
+					<key>versionNumber</key>
+					<string>0.0.1</string>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>arm64</string>
+					</array>
+					<key>buildNumber</key>
+					<string>31</string>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>9BF3C5A3BC68DE8A2443E622EEC5DDD533D129CC</string>
+						<key>dateExpires</key>
+						<string>26/04/26</string>
+						<key>type</key>
+						<string>Apple Distribution</string>
+					</dict>
+					<key>name</key>
+					<string>MapboxMobileEvents.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>8G86CTD8XL</string>
+						<key>name</key>
+						<string>Valmir Lima</string>
+					</dict>
+					<key>versionNumber</key>
+					<string>2.0.0</string>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>arm64</string>
+					</array>
+					<key>buildNumber</key>
+					<string>0.12.0</string>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>9BF3C5A3BC68DE8A2443E622EEC5DDD533D129CC</string>
+						<key>dateExpires</key>
+						<string>26/04/26</string>
+						<key>type</key>
+						<string>Apple Distribution</string>
+					</dict>
+					<key>name</key>
+					<string>hermes.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>8G86CTD8XL</string>
+						<key>name</key>
+						<string>Valmir Lima</string>
+					</dict>
+					<key>versionNumber</key>
+					<string>0.12.0</string>
+				</dict>
+			</array>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>8G86CTD8XL.com.ateko</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>8G86CTD8XL</string>
+				<key>get-task-allow</key>
+				<false/>
+			</dict>
+			<key>name</key>
+			<string>app_ateko.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>36e31505-4da1-4e20-b1b4-0ccac7b949ae</string>
+				<key>dateExpires</key>
+				<string>26/04/26</string>
+				<key>name</key>
+				<string>iOS Team Ad Hoc Provisioning Profile: com.ateko</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>8G86CTD8XL</string>
+				<key>name</key>
+				<string>Valmir Lima</string>
+			</dict>
+			<key>versionNumber</key>
+			<string>1.0</string>
+		</dict>
+	</array>
+</dict>
+</plist>
