@@ -1,0 +1,5 @@
+import { MAP_KEY } from "@env";
+
+export const create_router = (coord_pro: any[], cliente_x: number, cliente_y: number) => {
+    return `https://api.mapbox.com/directions/v5/mapbox/driving/${coord_pro[0]}%2C${coord_pro[1]}%3B${cliente_x}%2C${cliente_y}?alternatives=false&annotations=state_of_charge%2Cduration&geometries=geojson&language=en&overview=full&steps=true&engine=electric&ev_initial_charge=56000&ev_max_charge=70000&ev_connector_types=ccs_combo_type1%2Cccs_combo_type2&energy_consumption_curve=10%2C300%3B20%2C130%3B40%2C100%3B60%2C110%3B80%2C120%3B100%2C140%3B120%2C160%3B140%2C180&ev_charging_curve=7000%2C250000%3B14000%2C220000%3B21000%2C180000%3B28000%2C140000%3B35000%2C100000%3B42000%2C80000%3B49000%2C60000%3B63000%2C40000&ev_max_ac_charging_power=11500&ev_min_charge_at_destination=10500&ev_min_charge_at_charging_station=10500&auxiliary_consumption=1500&access_token=${MAP_KEY}`;
+};
